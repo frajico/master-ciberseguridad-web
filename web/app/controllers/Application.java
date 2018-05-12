@@ -32,12 +32,18 @@ public class Application extends Controller {
         checkUser();
 
         User u = (User) renderArgs.get("user");
-
-        if (u.getType().equals(Constants.User.TEACHER)){
-            List<User> students = User.loadStudents();
-            render("Application/teacher.html", u, students);
-        }else{
-            render("Application/student.html", u);
+        
+        if (u = null){
+            flash.put("error", Messages.get("Public.login.error.credentials"));
+            login();
+        }
+        else {
+            if (u.getType().equals(Constants.User.TEACHER)){
+                List<User> students = User.loadStudents();
+                render("Application/teacher.html", u, students);
+             }else{
+             render("Application/student.html", u);
+            }
         }
     }
 
